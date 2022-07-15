@@ -3,6 +3,7 @@ import Service from "./service";
 import SidebarComponent from './components/sidebar.vue';
 const {base, inherit} = g3wsdk.core.utils;
 const {Plugin: BasePlugin} = g3wsdk.core.plugin;
+const {GUI} = g3wsdk.gui;
 
 const Plugin = function() {
   const {name, i18n} = pluginConfig;
@@ -11,29 +12,32 @@ const Plugin = function() {
     i18n,
     service: Service
   });
-
-  this.setHookLoading({
-    loading: true
-  });
-
-  this.service.once('ready', () => {
-    //plugin registry
-    if (this.registerPlugin(this.config.gid)) {
-      if (!GUI.isready) GUI.on('ready', this.setupGui.bind(this));
-      else this.setupGui();
-    }
+  
+  if (this.registerPlugin(this.config.gid)) {
+    /**
+     * Start to show loading plugin
+     */
     this.setHookLoading({
-      loading: false
+      loading: true
     });
-        // get service api config
-    const api = this.service.getApi();
-    this.setApi(api);
-    this.setReady(true);
-  });
-
-  //inizialize service
-  this.service.init(this.config);
-
+    
+    this.service.once('ready', () => {
+      //plugin registry
+      if (!GUI.isready) GUI.once('ready', ()=> this.setupGui());
+      else this.setupGui();
+      /**
+       * Stop to loading plugin
+       */
+      this.setHookLoading({
+        loading: false
+      });
+      this.setReady(true);
+    });
+    
+    //initialize service
+    this.service.init(this.config);
+  } 
+  
   //setup plugin interface
   this.setupGui = function() {
     this.createSideBarComponent(SidebarComponent,
@@ -45,7 +49,7 @@ const Plugin = function() {
         isolate: false,
         iconConfig: {
           color: '<COLOR OF ICON OD SIDEBAR ITEM>',
-          icon:'<ICON CLASS>',
+          icon:'<ICON CLASS>', // see vueappplugin,js font list 
         },
         mobile: true,
         events: {
@@ -55,7 +59,7 @@ const Plugin = function() {
           }
         },
         sidebarOptions: {
-          position: 1
+          position: 0 // can be a number or a string 
         }
       });
   };
