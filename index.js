@@ -1,35 +1,67 @@
 import pluginConfig from './config';
 import Service from "./service";
+import SidebarComponent from './components/sidebar.vue';
 const {base, inherit} = g3wsdk.core.utils;
-const {Plugin} = g3wsdk.core.plugin;
-const {addI18nPlugin} = g3wsdk.core.i18n;
+const {Plugin: BasePlugin} = g3wsdk.core.plugin;
 
-const _Plugin = function() {
-  base(this);
+const Plugin = function() {
   const {name, i18n} = pluginConfig;
-  this.name = name;
-  this.init = function() {
-    // add i18n of the plugin
-    addI18nPlugin({
-      name,
-      config: i18n
-    });
-    this.setService(Service);
-    //get config plugin from server
-    this.config = this.getConfig();
-    // check if has some condition default true
-    if (this.service.loadPlugin()) {
-      //plugin registry
-      if (this.registerPlugin(this.config.gid)) this.service.init(this.config);
+  base(this, {
+    name,
+    i18n,
+    service: Service
+  });
+
+  this.setHookLoading({
+    loading: true
+  });
+
+  this.service.once('ready', () => {
+    //plugin registry
+    if (this.registerPlugin(this.config.gid)) {
+      if (!GUI.isready) GUI.on('ready', this.setupGui.bind(this));
+      else this.setupGui();
     }
-    // need to be call to hide loading icon on map
+    this.setHookLoading({
+      loading: false
+    });
+        // get service api config
+    const api = this.service.getApi();
+    this.setApi(api);
     this.setReady(true);
+  });
+
+  //inizialize service
+  this.service.init(this.config);
+
+  //setup plugin interface
+  this.setupGui = function() {
+    this.createSideBarComponent(SidebarComponent,
+      {
+        id: name,
+        title: '<TITLE ON SIDEBARITEM>',
+        open: false,
+        collapsible: true,
+        isolate: false,
+        iconConfig: {
+          color: '<COLOR OF ICON OD SIDEBAR ITEM>',
+          icon:'<ICON CLASS>',
+        },
+        mobile: true,
+        events: {
+          open: {
+            when: 'before',
+            cb:()=>{}
+          }
+        },
+        sidebarOptions: {
+          position: 1
+        }
+      });
   };
 };
 
-inherit(_Plugin, Plugin);
+inherit(Plugin, BasePlugin);
 
-(function(plugin){
-  plugin.init();
-})(new _Plugin);
+new Plugin();
 
