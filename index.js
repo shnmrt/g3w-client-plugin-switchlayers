@@ -38,34 +38,42 @@ const Plugin = function() {
     this.service.init(this.config);
   } 
   
-  //setup plugin interface
-  this.setupGui = function() {
-    this.createSideBarComponent(SidebarComponent,
-      {
-        id: name,
-        title: '<TITLE ON SIDEBARITEM>',
-        open: false,
-        collapsible: true,
-        isolate: false,
-        iconConfig: {
-          color: '<COLOR OF ICON OD SIDEBAR ITEM>',
-          icon:'<ICON CLASS>', // see vueappplugin,js font list 
-        },
-        mobile: true,
-        events: {
-          open: {
-            when: 'before',
-            cb:()=>{}
-          }
-        },
-        sidebarOptions: {
-          position: 0 // can be a number or a string 
-        }
-      });
-  };
 };
 
 inherit(Plugin, BasePlugin);
+
+/**
+ * Method to show Ui on g3w-clint app interface
+ */
+Plugin.prototype.setupGui = function() {
+  this.createSideBarComponent(SidebarComponent,
+    {
+      id: name,
+      title: '<TITLE ON SIDEBARITEM>', // title show on sidebar item (see metadata)
+      open: false, // Boolean: if is collapsible true show open whe plugin is loaded
+      collapsible: true, // Boolean: true mean on click show bottom content; false working as button
+      isolate: false, // Boolean: true click event doesn't propagate of all sidebar item  
+      iconConfig: {
+        color: '<COLOR OF ICON OD SIDEBAR ITEM>', // color of icon
+        icon:'<ICON CLASS>', // see vueappplugin,js font list 
+      },
+      mobile: true,
+      /**
+       * event called
+       */
+      events: {
+        open: {
+          when: 'before',
+          cb:()=>{}
+        }
+      },
+      sidebarOptions: {
+        position: 0 // can be a number or a string 
+      }
+    }
+  );
+};
+
 
 new Plugin();
 
