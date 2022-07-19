@@ -12,25 +12,18 @@ const Plugin = function() {
     i18n,
     service: Service
   });
-  
   if (this.registerPlugin(this.config.gid)) {
-    /**
-     * Start to show loading plugin
-     */
-    this.setHookLoading({
-      loading: true
-    });
-    
+    // Show loading plugin icon
+    this.setHookLoading({ loading: true });
+
     this.service.once('ready', () => {
       //plugin registry
-      if (!GUI.isready) GUI.once('ready', ()=> this.setupGui());
+      if (!GUI.isready) GUI.once('ready', () => this.setupGui());
       else this.setupGui();
-      /**
-       * Stop to loading plugin
-       */
-      this.setHookLoading({
-        loading: false
-      });
+    
+      // Hide loading plugin icon
+      this.setHookLoading({ loading: false });
+    
       this.setReady(true);
     });
     
@@ -43,19 +36,19 @@ const Plugin = function() {
 inherit(Plugin, BasePlugin);
 
 /**
- * Method to show Ui on g3w-clint app interface
+ * Add a custom button on left sidebar (g3w-client)
  */
 Plugin.prototype.setupGui = function() {
   this.createSideBarComponent(SidebarComponent,
     {
       id: name,
-      title: '<TITLE ON SIDEBARITEM>', // title show on sidebar item (see metadata)
-      open: false, // Boolean: if is collapsible true show open whe plugin is loaded
-      collapsible: true, // Boolean: true mean on click show bottom content; false working as button
-      isolate: false, // Boolean: true click event doesn't propagate of all sidebar item  
+      title: 'Custom Sidebar Component', // textual description on left sidebar (eg. "metadata")
+      collapsible: true,                 // true = collapsible button; false = button
+      open: false,                       // if (collapsible) expand the button when plugin is loaded
+      isolate: false,                    // true = click event doesn't propagate to all sidebar item
       iconConfig: {
-        color: '<COLOR OF ICON OD SIDEBAR ITEM>', // color of icon
-        icon:'<ICON CLASS>', // see vueappplugin,js font list 
+        color: 'yellow',                 // color of icon
+        icon:'pin',                      // see gui\vue\vueappplugin.js font list
       },
       mobile: true,
       /**
@@ -64,16 +57,14 @@ Plugin.prototype.setupGui = function() {
       events: {
         open: {
           when: 'before',
-          cb:()=>{}
+          cb:()=> { /* TODO: add sample usage */ }
         }
       },
       sidebarOptions: {
-        position: 0 // can be a number or a string 
+        position: 0                     // can be a number or a string 
       }
     }
   );
 };
 
-
 new Plugin();
-

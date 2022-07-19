@@ -1,5 +1,5 @@
 {
-  "name": "PLUGIN NAME",
+  "name": "sidebar",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+<REPOSITORY PLUGIN>"
+    "url": "git+https://github.com/g3w-suite/g3w-client-plugin-elevation-profile.git"
   },
   "keywords": [
     "editing",
@@ -23,9 +23,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "<REPOSITORY PLUGIN>issues"
+    "url": "https://github.com/g3w-suite/g3w-client-plugin-elevation-profile/issues"
   },
-  "homepage": "<REPOSITORY PLUGIN>#readme",
+  "homepage": "https://github.com/g3w-suite/g3w-client-plugin-elevation-profile/#readme",
   "browserslist": "defaults",
   "engines" : {
     "node" : ">=16.13.2",
