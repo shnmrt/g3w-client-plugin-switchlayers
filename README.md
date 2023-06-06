@@ -1,5 +1,26 @@
-# g3w-client-plugin-sidebar
+# g3w-client-plugin-switchlayers
 
-This is a base plugin sidebar repository. It can be used as template for create new G3W-CLIENT plugin that create a sidebar item.
+This plugin gives flexible and rapid control on toggle (on/off) to groups of layers to the user. 
 
-![sidebar-plugin](https://user-images.githubusercontent.com/9614886/179748565-c12c3b8e-d8d1-4ec6-8867-33cb5f1465a8.png)
+The switchlayers plugin is composed of a **dropdown** menu, a range **slider**, and a **label**. 
+
+ - The **dropdown** menu controls the groups in the *Table of Content (TOC)*. Based on the selection of the group, it toggles on the selected group and the toggles off the rest. 
+ - The **slider** controls the which layer should be displayed on the map by changing the value of the slider.
+ - The **label** shows the name of the layer that displayed on the map.
+
+
+## _Limitations_
+This plugin is limited to control/display group of layers. The sample project directory can be like as follows:
+```
+ - group_01
+  |---layer_01
+  |---layer_02
+
+ - group_02
+  |---layer_01
+  |---layer_02
+  |---layer_03
+```
+
+
+This plugin is developed based on the sidebar plugin template that provided by [g3w](github.com/g3w-suite).
