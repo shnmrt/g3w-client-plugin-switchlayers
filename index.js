@@ -8,7 +8,7 @@ const {GUI} = g3wsdk.gui;
 const Plugin = function() {
   const {name, i18n} = pluginConfig;
   base(this, {
-    name,
+    name : "sidebar", // indicating a name is 
     i18n,
     service: Service
   });
@@ -42,13 +42,13 @@ Plugin.prototype.setupGui = function() {
   this.createSideBarComponent(SidebarComponent,
     {
       id: name,
-      title: 'Custom Sidebar Component', // textual description on left sidebar (eg. "metadata")
+      title: 'Switch Layers', // textual description on left sidebar (eg. "metadata")
       collapsible: true,                 // true = collapsible button; false = button
       open: false,                       // if (collapsible) expand the button when plugin is loaded
       isolate: false,                    // true = click event doesn't propagate to all sidebar item
       iconConfig: {
-        color: 'yellow',                 // color of icon
-        icon:'pin',                      // see gui\vue\vueappplugin.js font list
+        color: 'lightgreen',                 // color of icon
+        icon:'layers',                      // see gui\vue\vueappplugin.js font list
       },
       mobile: true,
       /**
@@ -61,7 +61,7 @@ Plugin.prototype.setupGui = function() {
         }
       },
       sidebarOptions: {
-        position: 0                     // can be a number or a string 
+        position: 4                     // can be a number or a string 
       }
     }
   );
