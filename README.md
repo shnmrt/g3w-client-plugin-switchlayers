@@ -23,6 +23,6 @@ This plugin is limited to control/display group of layers. The sample project di
 ```
 
 
-This plugin is developed based on the sidebar plugin template that provided by [g3w](github.com/g3w-suite).
+This plugin is developed based on the sidebar plugin template that provided by [g3w-suite](https://github.com/g3w-suite/g3w-client-plugin-sidebar)
 
 ![g3w-switchlayers](https://github.com/shnmrt/g3w-client-plugin-switchlayers/assets/34002197/ca145a6a-b527-4c21-9fee-c8ce8a889885)
